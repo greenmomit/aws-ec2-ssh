@@ -10,6 +10,11 @@ SaveUserName=${SaveUserName//"="/".equal."}
 SaveUserName=${SaveUserName//","/".comma."}
 SaveUserName=${SaveUserName//"@"/".at."}
 
+BannedUsers=""
+if [[ $BannedUsers =~ (^|[[:space:]])"$SaveUserName"($|[[:space:]]) ]] ; then
+  exit 1
+fi
+
 aws iam list-ssh-public-keys --user-name "$SaveUserName" --query "SSHPublicKeys[?Status == 'Active'].[SSHPublicKeyId]" --output text | while read KeyId; do
   aws iam get-ssh-public-key --user-name "$SaveUserName" --ssh-public-key-id "$KeyId" --encoding SSH --query "SSHPublicKey.SSHPublicKeyBody" --output text
 done
