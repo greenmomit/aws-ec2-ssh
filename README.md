@@ -64,3 +64,7 @@ This solution will use the following mapping for those special characters when c
 * `@` => `.at.`
 
 So instead of `name@email.com` you will need to use `name.at.email.com` when login via SSH.
+
+## Ban users from individual resources
+
+If you want to control over which users have access to certain resources, just include their IAM user names in the BannedUsers list of `authorized_keys_command.sh` file separated by a single space.
